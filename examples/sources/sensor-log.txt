@@ -1,0 +1,3 @@
+Sensor log: the vibration reading increased from 2 mm/s to 4 mm/s after a load change. The sensor sampled the bearing housing at 10 kHz.
+
+The log records a change in vibration but contains no inspection outcome.
