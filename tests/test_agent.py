@@ -7,6 +7,7 @@ import unittest
 
 from report_compiler.agent import ResearchAgent, write_artifacts
 from report_compiler.citation_checker import validate_report
+from report_compiler.cli import main
 from report_compiler.loader import load_corpus
 from report_compiler.models import Evidence
 from report_compiler.retriever import retrieve
@@ -72,6 +73,25 @@ class ResearchAgentTests(unittest.TestCase):
             self.assertEqual(manifest["final_state"], "DONE")
             self.assertTrue((Path(target) / "report.md").exists())
             self.assertTrue((Path(target) / "validation.json").exists())
+
+    def test_cli_generates_cited_artifacts(self) -> None:
+        root = self.make_sources()
+        with tempfile.TemporaryDirectory() as target:
+            exit_code = main(
+                [
+                    "run",
+                    "--request",
+                    "vibration load",
+                    "--sources",
+                    str(root),
+                    "--out",
+                    target,
+                ]
+            )
+            report = (Path(target) / "report.md").read_text(encoding="utf-8")
+            self.assertEqual(exit_code, 0)
+            self.assertIn("[S1]", report)
+            self.assertTrue((Path(target) / "manifest.json").exists())
 
 
 if __name__ == "__main__":
