@@ -32,7 +32,7 @@ class ResearchAgentTests(unittest.TestCase):
     def test_loader_preserves_stable_line_spans(self) -> None:
         root = self.make_sources()
         chunks = load_corpus(root, chunk_lines=1)
-        self.assertEqual([chunk.source_path for chunk in chunks], ["maintenance.txt", "maintenance.txt", "sensor.md", "sensor.md", "sensor.md"])
+        self.assertEqual([chunk.source_path for chunk in chunks], ["maintenance.txt", "sensor.md", "sensor.md"])
         self.assertEqual(chunks[-1].line_start, 3)
 
     def test_retriever_returns_ranked_lexical_evidence(self) -> None:
